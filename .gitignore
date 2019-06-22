@@ -2,3 +2,4 @@ venv
 *.pyc
 thumbs.db
 .env
+model.joblib

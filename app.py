@@ -2,6 +2,7 @@ import os
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+from sklearn.externals import joblib
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
