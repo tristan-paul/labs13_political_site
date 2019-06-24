@@ -12,6 +12,11 @@ css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
+#load model
+if __name__ == '__main__':
+    model = joblib.load('./model.joblib')
+    app.run_server(debug=True)
+
 
 #the webpage formatting
 app.layout = html.Div(children=[
@@ -82,8 +87,3 @@ def predict_cost(req):
     cost = model.predict(req)
     return "To have an effect, the client would pay $'{}'".format(cost)
 
-
-#load model
-if __name__ == '__main__':
-    model = joblib.load('./model.joblib')
-    app.run_server(debug=True)
