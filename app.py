@@ -31,16 +31,16 @@ app.layout = html.Div(children=[
 
 #callbacks - makes the input into variables
 @app.callback(
-    Output(component_id="Amount"),
-    [Input(component_id='Year'),
-     Input(component_id='Type'),
-     Input(component_id='RegistrantName'),
-     Input(component_id='GeneralDescription'),
-     Input(component_id='ClientName'),
-     Input(component_id='SelfFiler'),
-     Input(component_id='IsStateOrLocalGov'),
-     Input(component_id='ClientCountry'),
-     Input(component_id='ClientState')]
+    Output(component_id="Amount", component_property='children'),
+    [Input(component_id='Year', component_property='value'),
+     Input(component_id='Type', component_property='value'),
+     Input(component_id='RegistrantName', component_property='value'),
+     Input(component_id='GeneralDescription', component_property='value'),
+     Input(component_id='ClientName', component_property='value'),
+     Input(component_id='SelfFiler', component_property='value'),
+     Input(component_id='IsStateOrLocalGov', component_property='value'),
+     Input(component_id='ClientCountry', component_property='value'),
+     Input(component_id='ClientState', component_property='value')]
 )
 
 
