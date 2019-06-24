@@ -2,7 +2,7 @@ import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
 
@@ -45,15 +45,15 @@ app.layout = html.Div(children=[
 @app.callback(
     Output('hidden-json', 'children'),
     [Input('button', 'n_clicks')],
-    state = [State(component_id='Year', component_property='value'),
-     State(component_id='Type', component_property='value'),
-     State(component_id='RegistrantName', component_property='value'),
-     State(component_id='GeneralDescription', component_property='value'),
-     State(component_id='ClientName', component_property='value'),
-     State(component_id='SelfFiler', component_property='value'),
-     State(component_id='IsStateOrLocalGov', component_property='value'),
-     State(component_id='ClientCountry', component_property='value'),
-     State(component_id='ClientState', component_property='value')]
+    state = [State('Year', 'value'),
+     State('Type', 'value'),
+     State('RegistrantName', 'value'),
+     State('GeneralDescription', 'value'),
+     State('ClientName', 'value'),
+     State('SelfFiler', 'value'),
+     State('IsStateOrLocalGov', 'value'),
+     State('ClientCountry', 'value'),
+     State('ClientState', 'value')]
 )
 def getjson(n_clicks, Year, Type, RegistrantName,
             GeneralDescription, ClientName, SelfFiler,
