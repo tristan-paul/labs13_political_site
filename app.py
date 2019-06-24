@@ -4,11 +4,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from sklearn.externals import joblib
+import json
+
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
+
 
 #the webpage formatting
 app.layout = html.Div(children=[
@@ -27,24 +30,20 @@ app.layout = html.Div(children=[
         dcc.Input(id='ClientState', placeholder='Outside US', type='text'),
     ]),
 
+    #button to finalize input
     html.Button('predict', id='button', n_clicks=0),
-    # Hidden div inside the app that stores button flag
-    html.Div(id='button-clicks', style={'display': 'none'}),
-    html.Hr(),
-    html.Div(id='Amount')
+
+    #storage for input as json
+    html.Div(id='hidden-json', 'display': 'none'),
+
+    #where result prints
+    html.Div(id='Result')
 ])
 
-#callback - button
-@app.callback(
-    Output('button-clicks', 'children'),
-    [Input('button', 'n_clicks')]
-)
-def click(n_clicks):
-    return 'Button has been clicked {} times'.format(n_clicks)
 
-#callbacks - makes the input into variables
+#callback - button click; stores request as json
 @app.callback(
-    Output(component_id="Amount", component_property='children'),
+    Output('hidden-json', 'children'),
     [Input('button', 'n_clicks')],
     state = [State(component_id='Year', component_property='value'),
      State(component_id='Type', component_property='value'),
@@ -56,21 +55,32 @@ def click(n_clicks):
      State(component_id='ClientCountry', component_property='value'),
      State(component_id='ClientState', component_property='value')]
 )
-#function that, on click, runs model
-def predict_cost(n_clicks, Year, Type, RegistrantName,
-                 GeneralDescription, ClientName, SelfFiler,
-                 IsStateOrLocalGov, ClientCountry, ClientState):
-    cost = model.predict(int(Year),
-                         str(Type),
-                         str(RegistrantName),
-                         str(GeneralDescription),
-                         str(ClientName),
-                         int(SelfFiler),
-                         int(IsStateOrLocalGov),
-                         str(ClientCountry),
-                         str(ClientState)
-                        )
-    return "that would cost $'{}'".format(cost)
+def getjson(n_clicks, Year, Type, RegistrantName,
+            GeneralDescription, ClientName, SelfFiler,
+            IsStateOrLocalGov, ClientCountry, ClientState):
+    x = {
+        "Year": Year,
+        "Type": Type,
+        "RegistrantName": RegistrantName,
+        "GeneralDescription": GeneralDescription,
+        "ClientName": ClientName,
+        "SelfFiler": SelfFiler,
+        "IsStateOrLocalGov": IsStateOrLocalGov,
+        "ClientCountry": ClientCountry,
+        "ClientState": ClientState
+    }
+    request = json.dumps(x)
+    return request
+
+
+#callback - predict on json div
+@app.callback(
+    Output("Result", 'children'),
+    [Input('hidden-json', 'children')]
+)
+def predict_cost(req):
+    cost = model.predict(req)
+    return "To have an effect, the client would pay $'{}'".format(cost)
 
 
 #load model
