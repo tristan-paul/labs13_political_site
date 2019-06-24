@@ -25,15 +25,16 @@ app.layout = html.Div(children=[
         dcc.Input(id='IsStateOrLocalGov', placeholder='0', type='text'),
         dcc.Input(id='ClientCountry', placeholder='Other', type='text'),
         dcc.Input(id='ClientState', placeholder='Outside US', type='text'),
-        html.Button('predict', id='button'),
-        html.Div(id='Amount')
-    ])
+    ]),
+
+    html.Button('predict', id='button', n_clicks=0),
+    html.Div(id='Amount')
 ])
 
 #callback - button
 @app.callback(
-Output('button-clicks', 'children'),
-[Input('button', 'n_clicks')]
+    Output('button-clicks', 'children'),
+    [Input('button', 'n_clicks')]
 )
 
 #callbacks - makes the input into variables
