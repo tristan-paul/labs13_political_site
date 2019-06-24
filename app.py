@@ -28,6 +28,9 @@ app.layout = html.Div(children=[
     ]),
 
     html.Button('predict', id='button', n_clicks=0),
+    # Hidden div inside the app that stores button flag
+    html.Div(id='button-clicks', style={'display': 'none'})
+    html.Hr(),
     html.Div(id='Amount')
 ])
 
@@ -36,6 +39,8 @@ app.layout = html.Div(children=[
     Output('button-clicks', 'children'),
     [Input('button', 'n_clicks')]
 )
+def click(n_clicks):
+    return 'Button has been clicked {} times'.format(n_clicks)
 
 #callbacks - makes the input into variables
 @app.callback(
@@ -51,9 +56,7 @@ app.layout = html.Div(children=[
      State(component_id='ClientCountry', component_property='value'),
      State(component_id='ClientState', component_property='value')]
 )
-
-
-#function that runs model on callback variables
+#function that, on click, runs model
 def predict_cost(n_clicks, Year, Type, RegistrantName,
                  GeneralDescription, ClientName, SelfFiler,
                  IsStateOrLocalGov, ClientCountry, ClientState):
