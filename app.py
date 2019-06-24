@@ -29,7 +29,7 @@ app.layout = html.Div(children=[
 
     html.Button('predict', id='button', n_clicks=0),
     # Hidden div inside the app that stores button flag
-    html.Div(id='button-clicks', style={'display': 'none'})
+    html.Div(id='button-clicks', style={'display': 'none'}),
     html.Hr(),
     html.Div(id='Amount')
 ])
