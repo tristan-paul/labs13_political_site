@@ -25,30 +25,37 @@ app.layout = html.Div(children=[
         dcc.Input(id='IsStateOrLocalGov', placeholder='0', type='text'),
         dcc.Input(id='ClientCountry', placeholder='Other', type='text'),
         dcc.Input(id='ClientState', placeholder='Outside US', type='text'),
+        html.Button('predict', id='button'),
         html.Div(id='Amount')
     ])
 ])
 
+#callback - button
+Output('button-clicks', 'children'),
+    [Input('button', 'n_clicks')])
+
+
 #callbacks - makes the input into variables
 @app.callback(
     Output(component_id="Amount", component_property='children'),
-    [Input(component_id='Year', component_property='value'),
-     Input(component_id='Type', component_property='value'),
-     Input(component_id='RegistrantName', component_property='value'),
-     Input(component_id='GeneralDescription', component_property='value'),
-     Input(component_id='ClientName', component_property='value'),
-     Input(component_id='SelfFiler', component_property='value'),
-     Input(component_id='IsStateOrLocalGov', component_property='value'),
-     Input(component_id='ClientCountry', component_property='value'),
-     Input(component_id='ClientState', component_property='value')]
+    [Input('button', 'n_clicks')],
+    state = [State(component_id='Year', component_property='value'),
+     State(component_id='Type', component_property='value'),
+     State(component_id='RegistrantName', component_property='value'),
+     State(component_id='GeneralDescription', component_property='value'),
+     State(component_id='ClientName', component_property='value'),
+     State(component_id='SelfFiler', component_property='value'),
+     State(component_id='IsStateOrLocalGov', component_property='value'),
+     State(component_id='ClientCountry', component_property='value'),
+     State(component_id='ClientState', component_property='value')]
 )
 
 
 #function that runs model on callback variables
-def predict_cost(Year, Type, RegistrantName, GeneralDescription,
-                 ClientName, SelfFiler, IsStateOrLocalGov,
-                 ClientCountry, ClientState):
-    cost = model.predict(float(Year),
+def predict_cost(n_clicks, Year, Type, RegistrantName,
+                 GeneralDescription, ClientName, SelfFiler,
+                 IsStateOrLocalGov, ClientCountry, ClientState):
+    cost = model.predict(int(Year),
                          str(Type),
                          str(RegistrantName),
                          str(GeneralDescription),
