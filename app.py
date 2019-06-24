@@ -12,11 +12,13 @@ css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
+
 #load model
 if __name__ == '__main__':
     model = joblib.load('./model.joblib')
     app.run_server(debug=True)
 
+model = joblib.load('./model.joblib')
 
 #the webpage formatting
 app.layout = html.Div(children=[
