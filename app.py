@@ -16,16 +16,16 @@ app.layout = html.Div(children=[
     #input field populated by default with first row
     html.Div(children=[
         html.Label('enter values'),
-        dcc.Input(id='Year', placeholder='1999', type='text'),
-        dcc.Input(id='Type', placeholder='REGISTRATION', type='text'),
-        dcc.Input(id='RegistrantName', placeholder='MCLEOD WATKINSON & MILLER', type='text'),
-        dcc.Input(id='GeneralDescription', placeholder='Lobbying and government affairs', type='text'),
-        dcc.Input(id='ClientName', placeholder='CALIFORNIA AVOCADO COMMISSION', type='text'),
-        dcc.Input(id='SelfFiler', placeholder='False', type='text'),
-        dcc.Input(id='IsStateOrLocalGov', placeholder='False', type='text'),
-        dcc.Input(id='ClientCountry', placeholder='USA', type='text'),
-        dcc.Input(id='ClientState', placeholder='CA', type='text'),
-        html.div(id='Amount')
+        dcc.Input(id='Year', placeholder='2008', type='text'),
+        dcc.Input(id='Type', placeholder='4th Quarter', type='text'),
+        dcc.Input(id='RegistrantName', placeholder='Ogilvy Government Relations', type='text'),
+        dcc.Input(id='GeneralDescription', placeholder='Lobbying', type='text'),
+        dcc.Input(id='ClientName', placeholder='At&t', type='text'),
+        dcc.Input(id='SelfFiler', placeholder='0', type='text'),
+        dcc.Input(id='IsStateOrLocalGov', placeholder='0', type='text'),
+        dcc.Input(id='ClientCountry', placeholder='Other', type='text'),
+        dcc.Input(id='ClientState', placeholder='Outside US', type='text'),
+        html.Div(id='Amount')
     ])
 ])
 
@@ -53,8 +53,8 @@ def predict_cost(Year, Type, RegistrantName, GeneralDescription,
                          str(RegistrantName),
                          str(GeneralDescription),
                          str(ClientName),
-                         bool(SelfFiler),
-                         bool(IsStateOrLocalGov),
+                         int(SelfFiler),
+                         int(IsStateOrLocalGov),
                          str(ClientCountry),
                          str(ClientState)
                         )
