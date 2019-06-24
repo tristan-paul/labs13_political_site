@@ -34,7 +34,7 @@ app.layout = html.Div(children=[
     html.Button('predict', id='button', n_clicks=0),
 
     #storage for input as json
-    html.Div(id='hidden-json', 'display': 'none'),
+    html.Div(id='hidden-json', style={'display': 'none'}),
 
     #where result prints
     html.Div(id='Result')
