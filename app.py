@@ -31,9 +31,10 @@ app.layout = html.Div(children=[
 ])
 
 #callback - button
+@app.callback(
 Output('button-clicks', 'children'),
-    [Input('button', 'n_clicks')])
-
+[Input('button', 'n_clicks')]
+)
 
 #callbacks - makes the input into variables
 @app.callback(
