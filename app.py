@@ -5,6 +5,8 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
+import boto3
+#from boto.s3.connection import S3Connection
 
 
 #stylesheet - placeholder from Dash tutorial
@@ -12,13 +14,20 @@ css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
+#establish S3 API and get model!
+client = boto3.client('s3')
+resource = boto3.resource('s3')
+resource.Bucket('labs13politicalmodel').download_file('lobby_model3.joblib', '/tmp/model.joblib')
+model = joblib.load('./tmp/model.joblib')
+os.remove('./tmp/model.joblib')
 
-#load model
-if __name__ == '__main__':
-    model = joblib.load('./model.joblib')
-    app.run_server(debug=True)
-
-model = joblib.load('./model.joblib')
+#alternate code if it messes up
+#connection = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+#bucket = connection.get_bucket(keys.'labs13politicalmodel')
+#temp = './tmp/model.joblib'
+#bucket.get_key(aws_app_assets + 'model.joblib').get_contents_to_filename(temp)
+#model = joblib.load(temp)
+#os.remove(temp)
 
 #the webpage formatting
 app.layout = html.Div(children=[
@@ -89,3 +98,6 @@ def predict_cost(req):
     cost = model.predict(req)
     return "To have an effect, the client would pay $'{}'".format(cost)
 
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

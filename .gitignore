@@ -3,3 +3,4 @@ venv
 thumbs.db
 .env
 model.joblib
+.aws
