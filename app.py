@@ -12,9 +12,9 @@ from boto.s3.connection import S3Connection
 
 #get access keys
 config = configparser.ConfigParser()
-config.read('config.py')
-aws_access_key_id = config['default']['aws_access_key_id']
-aws_secret_access_key = config['default']['aws_secret_access_key']
+config.read('config.ini')
+aws_access_key_id = config['awskeys']['aws_access_key_id']
+aws_secret_access_key = config['awskeys']['aws_secret_access_key']
 
 
 #stylesheet - placeholder from Dash tutorial
