@@ -6,9 +6,15 @@ from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
 #import boto3
-import config
+import configparser
 #from config import aws_access_key_id, aws_secret_access_key
 from boto.s3.connection import S3Connection
+
+#get access keys
+config = configparser.ConfigParser()
+config.read('config.py')
+aws_access_key_id = config['default']['aws_access_key_id']
+aws_secret_access_key = config['default']['aws_secret_access_key']
 
 
 #stylesheet - placeholder from Dash tutorial
@@ -24,7 +30,7 @@ server = app.server
 #os.remove('./tmp/model.joblib')
 
 #alternate code if it messes up
-connection = S3Connection(config.aws_access_key_id, config.aws_secret_access_key)
+connection = S3Connection(aws_access_key_id, aws_secret_access_key)
 bucket = connection.get_bucket('lobby-data')
 temp = '/tmp/lobby_model3.joblib'
 bucket.get_key(aws_app_assets + 'lobby_model3.joblib').get_contents_to_filename(temp)
