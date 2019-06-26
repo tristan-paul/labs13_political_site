@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
+import boto
 from boto.s3.connection import S3Connection
 
 
@@ -14,6 +15,7 @@ app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
 #recieve model from S3 as temp
+boto.s3.connect_to_region('us-east-1')
 connection = S3Connection(os.environ['awskey'], os.environ['awsSkey'])
 bucket = connection.get_bucket('lobbydata', validate=False)
 temp = '/tmp/lobby_model3.joblib'
