@@ -17,7 +17,8 @@ server = app.server
 connection = S3Connection(os.environ['awskey'], os.environ['awsSkey'])
 bucket = connection.get_bucket('lobby-data', validate=False)
 temp = '/tmp/lobby_model3.joblib'
-bucket.get_key('lobby_model3.joblib').get_contents_to_filename(temp)
+key = bucket.get_key('lobby_model3.joblib', validate=False)
+key.get_contents_to_filename(temp)
 model = joblib.load(temp)
 os.remove(temp)
 
