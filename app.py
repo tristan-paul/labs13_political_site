@@ -17,7 +17,7 @@ server = app.server
 #establish S3 API and get model!
 client = boto3.client('s3')
 resource = boto3.resource('s3')
-resource.Bucket('labs13politicalmodel').download_file('lobby_model3.joblib', '/tmp/model.joblib')
+resource.Bucket('lobby-data').download_file('lobby_model3.joblib', '/tmp/model.joblib')
 model = joblib.load('./tmp/model.joblib')
 os.remove('./tmp/model.joblib')
 
