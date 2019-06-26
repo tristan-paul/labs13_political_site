@@ -15,8 +15,8 @@ app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
 #recieve model from S3 as temp
-boto.s3.connect_to_region('us-east-1', os.environ['awskey'], os.environ['awsSkey'])
 connection = S3Connection(os.environ['awskey'], os.environ['awsSkey'])
+boto.s3.connect_to_region('us-east-1')
 bucket = connection.get_bucket('lobbydata', validate=False)
 temp = '/tmp/lobby_model3.joblib'
 key = bucket.get_key('lobby_model3.joblib',
