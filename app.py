@@ -8,6 +8,8 @@ import json
 import boto
 from boto.s3.connection import S3Connection
 
+export AWS_ACCESS_KEY_ID= os.environ['awskey']
+export AWS_SECRET_ACCESS_KEY = os.environ['awsSkey']
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
