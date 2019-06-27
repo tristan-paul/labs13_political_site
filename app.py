@@ -26,8 +26,7 @@ bucket = connection.get_bucket('lobbydata', validate=False)
 temp = '/tmp/lobby_model3.joblib'
 
 #there's only one key in the bucket
-key = bucket.get_all_keys(max_keys=1,
-                          validate=False)
+key = bucket.get_all_keys(max_keys=1)
 key.get_contents_to_filename(temp)
 model = joblib.load(temp)
 os.remove(temp)
