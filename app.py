@@ -8,8 +8,8 @@ import json
 import boto
 from boto.s3.connection import S3Connection
 
-export AWS_ACCESS_KEY_ID= os.environ['awskey']
-export AWS_SECRET_ACCESS_KEY = os.environ['awsSkey']
+AWS_ACCESS_KEY_ID= os.environ['awskey']
+AWS_SECRET_ACCESS_KEY = os.environ['awsSkey']
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -17,7 +17,7 @@ app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
 #recieve model from S3 as temp
-connection = S3Connection(os.environ['awskey'], os.environ['awsSkey'])
+connection = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 boto.s3.connect_to_region('us-east-1')
 bucket = connection.get_bucket('lobbydata', validate=False)
 temp = '/tmp/lobby_model3.joblib'
