@@ -7,6 +7,7 @@ from sklearn.externals import joblib
 import json
 import boto
 from boto.s3.connection import S3Connection
+from boto.s3.connection import Location
 
 AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
@@ -24,9 +25,8 @@ bucket = connection.get_bucket('lobbydata', validate=False)
     #connection = boto.s3.connect_to_region(bucket_location)
     #bucket = bucket = connection.get_bucket('lobbydata', validate=False)
 temp = '/tmp/lobby_model3.joblib'
-
-#there's only one key in the bucket
-key = bucket.get_all_keys(max_keys=1)
+key = bucket.get_key(lobby_model3.joblib,
+                     validate=False)
 key.get_contents_to_filename(temp)
 model = joblib.load(temp)
 os.remove(temp)
