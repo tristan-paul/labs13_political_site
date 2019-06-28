@@ -33,8 +33,6 @@ temp = '/tmp/model.joblib'
 gdd.download_file_from_google_drive(file_id= model_id,
                                     dest_path= temp,
                                     unzip=False)
-#model = joblib.load(temp)
-#os.remove(temp)
 
 #get data csv
 data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
@@ -104,11 +102,15 @@ def getjson(n_clicks, Year, Type, RegistrantName,
     Output("Result", 'children'),
     [Input('hidden-json', 'children')]
 )
-def predict_cost(req):
-    cost = model.predict(req)
-    return "To have an effect, the client would pay $'{}'".format(cost)
+def predict_cost(req, n_clicks):
+    if n_clicks == 1:
+        model = joblib.load(temp)
+        cost = model.predict(req)
+        return "the client would pay $'{}'".format(cost)
+    else:
+        cost = model.predict(req)
+        return "the client would pay $'{}'".format(cost)
 
 
 if __name__ == '__main__':
-    model = joblib.load(temp)
     app.run_server(debug=True)
