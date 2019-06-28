@@ -17,9 +17,9 @@ client = boto3.client('s3')
 #resource = boto3.resource('s3')
 #bucket = resource.Bucket('labs13politicalmodel')
 temp = '/tmp/test_file.jpg'
-s3.meta.client.download_file('labs13politicalmodel',
-                             'test_file.jpg',
-                             temp)
+client.download_file('labs13politicalmodel',
+                     'test_file.jpg',
+                     temp)
 #model = joblib.load('./model.joblib')
 #os.remove(temp)
 #model = joblib.load(temp)
