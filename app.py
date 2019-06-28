@@ -5,25 +5,38 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
-import boto3
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
-#get model
-client = boto3.client('s3')
-#resource = boto3.resource('s3')
-#bucket = resource.Bucket('labs13politicalmodel')
-temp = '/tmp/test_file.jpg'
-client.download_file('labs13politicalmodel',
-                     'test_file.jpg',
-                     temp)
-#model = joblib.load('./model.joblib')
-#os.remove(temp)
+#get model from s3 - IF IT HAD ONE
+#this code had worked and is being kept for reference sake
+#but the model was unable to be uploaded without timing out
+#import boto3
+#client = boto3.client('s3')
+#temp = '/tmp/test_file.jpg'
+#client.download_file('labs13politicalmodel',
+                     #'test_file.jpg',
+                     #temp)
 #model = joblib.load(temp)
 #os.remove(temp)
+
+
+#get model from google drive
+model_id = '1px8x8dYrun-kPwXikv7fM6bznmyFzSvR'
+temp = '/tmp/model.joblib'
+
+gdd.download_file_from_google_drive(file_id= model_id,
+                                    dest_path= temp,
+                                    unzip=False)
+model = joblib.load(temp)
+os.remove(temp)
+
+#get data csv
+data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
 
 #the webpage formatting
 app.layout = html.Div(children=[
