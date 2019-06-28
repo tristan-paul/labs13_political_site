@@ -102,10 +102,12 @@ def getjson(n_clicks, Year, Type, RegistrantName,
     Output("Result", 'children'),
     [Input('hidden-json', 'children')]
 )
-def predict_cost(req, n_clicks):
-    if n_clicks == 1:
+def predict_cost(req):
+    load_flag = 0
+    if load_flag == 0:
         model = joblib.load(temp)
         cost = model.predict(req)
+        load_flag = 1
         return "the client would pay $'{}'".format(cost)
     else:
         cost = model.predict(req)
