@@ -5,31 +5,25 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
-import boto
-from boto.s3.connection import S3Connection
-from boto.s3.connection import Location
-
-AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+import boto3
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=css)
 server = app.server
 
-#recieve model from S3 as temp
-connection = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-bucket = connection.get_bucket('lobbydata', validate=False)
-#bucket_location = bucket.get_location()
-#if bucket_location:
-    #connection = boto.s3.connect_to_region(bucket_location)
-    #bucket = bucket = connection.get_bucket('lobbydata', validate=False)
-temp = '/tmp/lobby_model3.joblib'
-key = bucket.get_key(lobby_model3.joblib,
-                     validate=False)
-key.get_contents_to_filename(temp)
-model = joblib.load(temp)
-os.remove(temp)
+#get model
+client = boto3.client('s3')
+#resource = boto3.resource('s3')
+#bucket = resource.Bucket('labs13politicalmodel')
+temp = '/tmp/test_file.jpg'
+s3.meta.client.download_file('labs13politicalmodel',
+                             'test_file.jpg',
+                             temp)
+#model = joblib.load('./model.joblib')
+#os.remove(temp)
+#model = joblib.load(temp)
+#os.remove(temp)
 
 #the webpage formatting
 app.layout = html.Div(children=[
