@@ -33,8 +33,8 @@ temp = '/tmp/model.joblib'
 gdd.download_file_from_google_drive(file_id= model_id,
                                     dest_path= temp,
                                     unzip=False)
-model = joblib.load(temp)
-os.remove(temp)
+#model = joblib.load(temp)
+#os.remove(temp)
 
 #get data csv
 data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
@@ -110,4 +110,5 @@ def predict_cost(req):
 
 
 if __name__ == '__main__':
+    model = joblib.load(temp)
     app.run_server(debug=True)
