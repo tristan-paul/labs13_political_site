@@ -33,6 +33,8 @@ temp = '/tmp/model.joblib'
 gdd.download_file_from_google_drive(file_id= model_id,
                                     dest_path= temp,
                                     unzip=False)
+#flag for when model is loaded
+load_flag = 0
 
 #get data csv
 data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
@@ -57,11 +59,11 @@ app.layout = html.Div(children=[
     #button to finalize input
     html.Button('predict', id='button', n_clicks=0),
 
-    #storage for input as json
-    html.Div(id='hidden-json', style={'display': 'none'}),
-
     #where result prints
-    html.Div(id='Result')
+    html.Div(id='Result'),
+
+    #storage for input as json
+    html.Div(id='hidden-json', style={'display': 'none'})
 ])
 
 
@@ -103,7 +105,6 @@ def getjson(n_clicks, Year, Type, RegistrantName,
     [Input('hidden-json', 'children')]
 )
 def predict_cost(req):
-    load_flag = 0
     if load_flag == 0:
         model = joblib.load(temp)
         cost = model.predict(req)
