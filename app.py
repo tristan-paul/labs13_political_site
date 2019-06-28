@@ -28,16 +28,15 @@ server = app.server
 
 #get model from google drive
 model_id = '1px8x8dYrun-kPwXikv7fM6bznmyFzSvR'
+small_model_id = '1O7c9HUvG4GsTUJ06cuBCwUhT77ks4QYZ'
 temp = '/tmp/model.joblib'
 
-gdd.download_file_from_google_drive(file_id= model_id,
+gdd.download_file_from_google_drive(file_id= small_model_id,
                                     dest_path= temp,
                                     unzip=False)
-#flag for when model is loaded
-load_flag = 0
 
 #get data csv
-data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
+#data_id = 'https://drive.google.com/open?id=1LhC4sv4MqsoPHhz6wEzzy1_zsBZhIB2M'
 
 #the webpage formatting
 app.layout = html.Div(children=[
@@ -105,12 +104,7 @@ def getjson(n_clicks, Year, Type, RegistrantName,
     [Input('hidden-json', 'children')]
 )
 def predict_cost(req):
-    if load_flag == 0:
         model = joblib.load(temp)
-        cost = model.predict(req)
-        load_flag = 1
-        return "the client would pay $'{}'".format(cost)
-    else:
         cost = model.predict(req)
         return "the client would pay $'{}'".format(cost)
 
