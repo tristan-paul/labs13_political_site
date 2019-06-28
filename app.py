@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import json
 from google_drive_downloader import GoogleDriveDownloader as gdd
+import category_encoders
 
 #stylesheet - placeholder from Dash tutorial
 css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
